@@ -1,0 +1,47 @@
+procedure aradesh01
+begin
+	if (local_var(1) >= 2) then begin
+		if (local_var(1) >= 3) then begin
+			gsay_reply(33, 101);
+		end
+		else begin
+			gsay_reply(33, 102);
+		end
+	end
+	else begin
+		gsay_reply(33, 103);
+	end
+	giq_option(5, 33, 104, aradesh02, 50);
+	giq_option(4, 33, 105, aradesh01_2, 51);
+end
+
+procedure aradesh02
+begin
+	gsay_reply(33, 111);
+end
+
+procedure aradesh01_2
+begin
+	set_local_var(9, local_var(9) + 1);
+	call DownReact();
+	if (local_var(1) >= 2) then begin
+		call aradesh05();
+	end
+	else begin
+		call aradesh06();
+	end
+end
+
+procedure aradesh05
+begin
+	gsay_reply(33, 122);
+	giq_option(5, 33, 123, aradesh06, 51);
+	giq_option(4, 33, 124, aradesh04, 50);
+	giq_option(4, 33, 125, aradesh07, 51);
+end
+
+procedure aradesh06
+begin
+	set_local_var(9, local_var(9) + 1);
+	gsay_message(33, 126, 51);
+end
