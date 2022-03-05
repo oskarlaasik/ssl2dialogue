@@ -1,9 +1,8 @@
 
 
 class Numeric2Text:
-
     #convert numeric dialogue to text
-    def parse_text_from_numeric_dialogue(msg_data, numeric_dialog, buffer):
+    def parse_text_from_numeric_dialogue(msg_data, numeric_dialog, buffer, dataset_type='linebyline'):
         text = []
         line_buffer = ''
         for line in msg_data:
@@ -17,7 +16,6 @@ class Numeric2Text:
                     line_buffer = ''
                 else:
                     line_buffer += ' ' + line
-        print(text)
 
         for numerical_utterance in numeric_dialog:
             utterances = [None] * 2
@@ -28,10 +26,21 @@ class Numeric2Text:
                     utterances[1] = msg
             if None in utterances:
                 continue
-            buffer.write(utterances[0])
-            buffer.write('\n')
-            buffer.write(utterances[1])
-            buffer.write('\n')
-            buffer.write('\n')
-
+            if dataset_type == 'linebyline':
+                #mark beginning of prompt
+                buffer.write('<BOS> ')
+                # remove fallout metadata from utterings and write to buffer
+                buffer.write(utterances[0].split('{')[-1][:-1])
+                #mark end of prompt
+                buffer.write(' <SEPARTOK> ')
+                buffer.write(utterances[1].split('{')[-1][:-1])
+                #mark end of reply
+                buffer.write(' <EOS>')
+                buffer.write('\n')
+            else:
+                # remove fallout metadata from utterings and write to buffer
+                buffer.write(utterances[0].split('{')[-1][:-1])
+                buffer.write('\n')
+                buffer.write(utterances[1].split('{')[-1][:-1])
+                buffer.write('\n')
         return buffer
