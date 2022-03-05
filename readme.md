@@ -23,7 +23,7 @@ Then run:
 
 Run the dialogue unpacker with:
 ```console
-python parse_ssl.py  -l datFiles/F1 -l datFiles/F2
+python parse_ssl.py  -l unpackedDatFiles/F1 -l unpackedDataFiles/F2
 ```
 
 tested with python 3.7
